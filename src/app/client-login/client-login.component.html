@@ -1,0 +1,22 @@
+<body>
+    <nav>
+        <button (click)="navigateHome()" class="home">Home</button>
+        <button (click)="register()" class="register">Register</button>
+    </nav>
+    <div class="container">
+        <h1>Client Login</h1>
+        <form (ngSubmit)="login()">
+            <div class="form-group">
+                <input type="text" id="username" [(ngModel)]="username" placeholder="Username" name="username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" [(ngModel)]="password" placeholder="Password" name="password"
+                    required>
+            </div>
+            <button type="submit" class="login">Login</button>
+            <p *ngIf="message" class="alert">{{ message }}</p>
+        </form>
+        <div class="navigation-buttons mt-3">
+        </div>
+    </div>
+</body>

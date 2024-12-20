@@ -1,0 +1,61 @@
+<body>
+
+  <p class="WelcomeUser">Welcome, {{ username }}!</p>
+
+  <nav class="navbar navbar-light bg-light justify-content-between">
+    <button (click)="logout()" class="logout">Logout</button>
+  </nav>
+  <button (click)="toggleView()" class="left-top-button">
+    {{ viewSchedule ? 'Back to Schedule Meeting' : 'View Scheduled Meetings' }}
+  </button>
+
+<div class="container">
+  <div *ngIf="!viewSchedule">
+    <form (ngSubmit)="scheduleMeeting()">
+      <div class="form-group">
+        <input type="text" id="topic" [(ngModel)]="topic" placeholder="Meeting Topic" name="topic" required>
+      </div>
+      <div class="form-group">
+        <input type="number" id="numberOfPeople" [(ngModel)]="numberOfPeople" placeholder="Number of People" name="numberOfPeople" required>
+      </div>
+      <div class="form-group">
+        <input type="datetime-local" id="startTime" class="form-control" [(ngModel)]="startTime" name="startTime" placeholder="Start Time" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Schedule Meeting</button>
+    </form>
+    <div *ngIf="showMessage" class="alert-success">
+      {{ message }}
+      <div *ngIf="newMeeting" class="meetingdetails">
+        <p><strong>New Meeting Details:</strong></p>
+        <p>Topic: {{ newMeeting.topic }}</p>
+        <p>Number of People: {{ newMeeting.numberOfPeople }}</p>
+        <p>Start Time: {{ newMeeting.startTime }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="viewSchedule">
+    <h2>Scheduled Meetings</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Number of People</th>
+          <th>Start Time</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let meeting of meetings">
+          <td>{{ meeting.topic }}</td>
+          <td>{{ meeting.numberOfPeople }}</td>
+          <td>{{ meeting.startTime }}</td>
+          <td>
+            <button (click)="deleteMeeting(meeting.id)" class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
